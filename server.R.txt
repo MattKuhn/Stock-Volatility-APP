@@ -24,8 +24,11 @@ shinyServer(function(input, output) {
     output$plot <- renderDygraph({
 
       prices <- dataInput()
+      prices <- Ad(prices)
+      rets <- Delt(prices)
+      realized.vol <- abs(rets) * sqrt(252)
 
-        dygraph(Ad(prices)) %>%
+        dygraph(realized.vol) %>%
             dyRangeSelector()
       })
 })
